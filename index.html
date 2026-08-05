@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Simule o financiamento do seu automóvel ou imóvel e descubra a entrada necessária para a parcela que cabe no seu orçamento."
+    />
+    <meta name="theme-color" content="#f4f7f5" />
+    <title>Finansee — Simulador de financiamento</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#simulador" aria-label="Finansee — ir para o simulador">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" role="img">
+              <path d="M8 22.5V16m8 6.5v-13m8 13v-9" />
+              <path d="m6.5 11.5 7-5 6 3 6-5" />
+              <path d="m21.5 4.5h4v4" />
+            </svg>
+          </span>
+          <span>finan<span>see</span></span>
+        </a>
+
+        <div class="header-status" aria-label="Características da ferramenta">
+          <span class="status-dot" aria-hidden="true"></span>
+          Simulação gratuita e sem cadastro
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> Decida com mais clareza</p>
+          <h1 id="hero-title">Seu próximo grande passo começa com um plano.</h1>
+          <p class="hero-description">
+            Descubra a entrada necessária para a parcela que cabe na sua vida. Ajuste os valores e compare cenários em tempo real.
+          </p>
+        </div>
+
+        <div class="hero-highlights" aria-label="Diferenciais do simulador">
+          <div class="highlight-item">
+            <span class="highlight-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3v18M6.5 7.5h8.25a3.25 3.25 0 0 1 0 6.5H9.25a3.25 3.25 0 0 0 0 6.5H18" /></svg>
+            </span>
+            <span><strong>Cálculo instantâneo</strong>Valores atualizados ao ajustar</span>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 19V9m5 10V5m6 14v-7m5 7V3" /></svg>
+            </span>
+            <span><strong>Cenários comparáveis</strong>Encontre o prazo ideal</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="simulator-layout" id="simulador" aria-label="Simulador de financiamento">
+        <div class="simulator-card">
+          <div class="card-heading">
+            <div>
+              <p class="section-kicker">Sua simulação</p>
+              <h2>O que você quer financiar?</h2>
+            </div>
+            <button class="text-button" id="resetButton" type="button" aria-label="Restaurar valores iniciais">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 9a8 8 0 1 1-.4 5M4 4v5h5" /></svg>
+              Recomeçar
+            </button>
+          </div>
+
+          <div class="type-selector" role="group" aria-label="Tipo de financiamento">
+            <button
+              class="type-option is-active"
+              id="vehicleTab"
+              type="button"
+              aria-pressed="true"
+              data-type="vehicle"
+            >
+              <span class="type-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="m5 16 1.2-5.1A2.5 2.5 0 0 1 8.6 9h6.8a2.5 2.5 0 0 1 2.4 1.9L19 16M3.5 16h17v3h-2v2h-3v-2h-7v2h-3v-2h-2v-3ZM6 13h2m8 0h2" /></svg>
+              </span>
+              <span><strong>Automóvel</strong><small>Até 60 meses</small></span>
+            </button>
+            <button
+              class="type-option"
+              id="propertyTab"
+              type="button"
+              aria-pressed="false"
+              data-type="property"
+            >
+              <span class="type-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="m3 11 9-7 9 7v9H3v-9Zm6 9v-6h6v6" /></svg>
+              </span>
+              <span><strong>Imóvel</strong><small>Até 35 anos</small></span>
+            </button>
+          </div>
+
+          <form id="financeForm" novalidate>
+            <fieldset class="form-section">
+              <legend>Dados do bem</legend>
+              <div class="field-grid">
+                <div class="field-block">
+                  <label for="assetValueInput" id="assetValueLabel">Valor do automóvel</label>
+                  <div class="input-shell">
+                    <span class="input-prefix">R$</span>
+                    <input
+                      id="assetValueInput"
+                      type="text"
+                      inputmode="decimal"
+                      autocomplete="off"
+                      aria-describedby="assetValueHint"
+                      maxlength="18"
+                    />
+                  </div>
+                  <small class="field-hint" id="assetValueHint">Informe o valor total do bem</small>
+                </div>
+
+                <div class="field-block">
+                  <label for="interestRateInput">Taxa de juros</label>
+                  <div class="rate-composite">
+                    <div class="input-shell rate-input-shell">
+                      <input
+                        id="interestRateInput"
+                        type="text"
+                        inputmode="decimal"
+                        autocomplete="off"
+                        aria-describedby="rateHint"
+                        maxlength="8"
+                      />
+                      <span class="input-suffix">%</span>
+                    </div>
+                    <div class="period-selector" aria-label="Período da taxa de juros">
+                      <button class="period-option is-active" type="button" data-period="month" aria-label="Taxa ao mês" aria-pressed="true">a.m.</button>
+                      <button class="period-option" type="button" data-period="year" aria-label="Taxa ao ano" aria-pressed="false">a.a.</button>
+                    </div>
+                  </div>
+                  <small class="field-hint" id="rateHint">Taxa efetiva ao mês</small>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-section plan-section">
+              <legend>Monte o seu plano</legend>
+              <p class="section-description">Mova os controles ou digite os valores. O último valor editado passa a guiar a simulação.</p>
+
+              <div class="range-field" id="termControl">
+                <div class="range-heading">
+                  <div>
+                    <label for="termInput">Prazo do financiamento</label>
+                    <span class="range-caption" id="termCaption">Escolha entre 1 e 60 meses</span>
+                  </div>
+                  <div class="compact-input">
+                    <input id="termInput" type="text" inputmode="numeric" autocomplete="off" maxlength="3" />
+                    <span id="termUnit">meses</span>
+                  </div>
+                </div>
+                <input id="termRange" class="range-input" type="range" min="1" max="60" step="1" aria-label="Prazo do financiamento em meses" />
+                <div class="range-limits" aria-hidden="true"><span id="termMinLabel">1 mês</span><span id="termMaxLabel">60 meses</span></div>
+              </div>
+
+              <div class="range-field is-guide" id="paymentControl">
+                <div class="range-heading">
+                  <div>
+                    <span class="label-line">
+                      <label for="paymentInput">Parcela desejada</label>
+                      <span class="guide-badge" id="paymentGuideBadge">Valor guia</span>
+                    </span>
+                    <span class="range-caption" id="paymentCaption">Quanto você pretende pagar por mês</span>
+                  </div>
+                  <div class="compact-input money-compact">
+                    <span>R$</span>
+                    <input id="paymentInput" type="text" inputmode="decimal" autocomplete="off" maxlength="16" />
+                  </div>
+                </div>
+                <input id="paymentRange" class="range-input" type="range" min="0" max="5000" step="50" aria-label="Valor desejado da parcela" />
+                <div class="range-limits" aria-hidden="true"><span>R$ 0</span><span id="paymentMaxLabel">R$ 5.000</span></div>
+              </div>
+
+              <div class="range-field" id="entryControl">
+                <div class="range-heading">
+                  <div>
+                    <span class="label-line">
+                      <label for="entryInput">Valor da entrada</label>
+                      <span class="guide-badge" id="entryGuideBadge" hidden>Valor guia</span>
+                    </span>
+                    <span class="range-caption" id="entryCaption">Calculada a partir da parcela desejada</span>
+                  </div>
+                  <div class="compact-input money-compact">
+                    <span>R$</span>
+                    <input id="entryInput" type="text" inputmode="decimal" autocomplete="off" maxlength="18" />
+                  </div>
+                </div>
+                <input id="entryRange" class="range-input" type="range" min="0" max="80000" step="100" aria-label="Valor da entrada" />
+                <div class="range-limits" aria-hidden="true"><span>R$ 0</span><span id="entryMaxLabel">R$ 80.000</span></div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <aside class="result-column" aria-label="Resultado da simulação">
+          <div class="result-card">
+            <div class="result-topline">
+              <span class="result-badge"><span></span> Simulação atualizada</span>
+              <span class="price-system">Sistema Price</span>
+            </div>
+
+            <div class="primary-result" aria-live="polite" aria-atomic="true">
+              <p id="primaryResultLabel">Entrada necessária</p>
+              <strong id="primaryResultValue">R$ 0,00</strong>
+              <span id="primaryResultDescription">para manter sua parcela no valor desejado</span>
+            </div>
+
+            <div class="income-panel" id="incomePanel" hidden>
+              <span class="income-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M4 19h16M6 16V9m4 7V9m4 7V9m4 7V9M3 7h18L12 3 3 7Z" /></svg>
+              </span>
+              <span>
+                <small>Renda mínima estimada</small>
+                <strong id="minimumIncomeValue">R$ 0,00</strong>
+                <em>30% de comprometimento da renda bruta</em>
+              </span>
+            </div>
+
+            <div class="financing-composition">
+              <div class="composition-heading">
+                <span>Composição do valor</span>
+                <strong id="financedPercentLabel">0% financiado</strong>
+              </div>
+              <div class="composition-bar" aria-hidden="true">
+                <span class="entry-part" id="entryBar"></span>
+                <span class="financed-part" id="financedBar"></span>
+              </div>
+              <div class="composition-legend">
+                <span><i class="entry-color"></i>Entrada <strong id="entryLegendValue">R$ 0</strong></span>
+                <span><i class="financed-color"></i>Financiado <strong id="financedLegendValue">R$ 0</strong></span>
+              </div>
+            </div>
+
+            <dl class="result-metrics">
+              <div>
+                <dt>Parcela estimada</dt>
+                <dd id="estimatedPaymentValue">R$ 0,00</dd>
+              </div>
+              <div>
+                <dt>Prazo</dt>
+                <dd id="resultTermValue">0 meses</dd>
+              </div>
+              <div>
+                <dt>Total em parcelas</dt>
+                <dd id="totalPaymentsValue">R$ 0,00</dd>
+              </div>
+              <div>
+                <dt>Juros estimados</dt>
+                <dd id="totalInterestValue">R$ 0,00</dd>
+              </div>
+              <div class="metric-wide">
+                <dt>Custo total com entrada</dt>
+                <dd id="totalCostValue">R$ 0,00</dd>
+              </div>
+            </dl>
+
+            <div class="result-note" id="resultNote">
+              <span aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 8v5m0 3.5v.1M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+              </span>
+              <p id="resultNoteText">Valores estimados para apoiar o seu planejamento.</p>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="comparison-section" aria-labelledby="comparisonTitle">
+        <div class="comparison-heading">
+          <div>
+            <p class="section-kicker">Explore possibilidades</p>
+            <h2 id="comparisonTitle">Compare outros prazos</h2>
+            <p id="comparisonDescription">Veja a entrada necessária mantendo a mesma parcela desejada.</p>
+          </div>
+          <span class="comparison-hint">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+            Selecione um cenário para aplicar
+          </span>
+        </div>
+        <div class="comparison-grid" id="comparisonGrid"></div>
+      </section>
+
+      <section class="transparency-note" aria-labelledby="transparencyTitle">
+        <span class="transparency-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.4c0 4.5 3.1 7.9 7.5 9.6 4.4-1.7 7.5-5.1 7.5-9.6V6L12 3Zm-3 9 2 2 4-4" /></svg>
+        </span>
+        <div>
+          <h2 id="transparencyTitle">Uma estimativa transparente</h2>
+          <p>
+            O cálculo usa o sistema Price e a taxa informada, sem incluir CET, IOF, seguros, tarifas ou correções monetárias. As condições finais e a análise de crédito variam em cada instituição.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <a class="brand footer-brand" href="#simulador" aria-label="Finansee — voltar ao simulador">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32"><path d="M8 22.5V16m8 6.5v-13m8 13v-9" /><path d="m6.5 11.5 7-5 6 3 6-5" /><path d="m21.5 4.5h4v4" /></svg>
+          </span>
+          <span>finan<span>see</span></span>
+        </a>
+        <p>Planeje hoje. Escolha melhor amanhã.</p>
+        <span>Simulador para fins informativos.</span>
+      </div>
+    </footer>
+
+    <noscript>
+      <div class="noscript-message">Ative o JavaScript no navegador para usar o simulador.</div>
+    </noscript>
+    <script src="script.js"></script>
+  </body>
+</html>
